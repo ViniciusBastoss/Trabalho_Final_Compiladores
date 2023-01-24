@@ -1,0 +1,9 @@
+compilar lexico:
+  flex -o lexico.c lexico.l
+  gcc lexico.c -o lexico
+  ./lexico < prog1.simples
+
+%x automato  -> cria um novo automato
+
+
+refatora: crlt + f

@@ -1,0 +1,10 @@
+programa um
+   inteiro a b   //comentario
+inicio
+    leia a    //tario a
+    leia b
+    enquanto a < b faca
+        escreva a
+        a <- a + 1
+    fimenquanto
+fimprograma
