@@ -122,6 +122,7 @@ comando
     | repeticao
     | selecao
     | atribuicao
+    //chamada_procedimento
     ;
 
 entrada_saida
@@ -257,6 +258,7 @@ expressao
     | termo
     ;
 
+//chamada de funcao
 termo
     : T_IDENTIF
         {
