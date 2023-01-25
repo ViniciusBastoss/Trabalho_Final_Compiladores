@@ -290,8 +290,14 @@ expressao
     ;
 
 //chamada de funcao
+chamada_func
+     : T_IDENTIF T_ABRE lista_argumentos T_FECHA
 
+lista_argumentos
+     : lista_argumentos argumento
+     |
 
+argumento: expressao
 
 termo
     : T_IDENTIF   

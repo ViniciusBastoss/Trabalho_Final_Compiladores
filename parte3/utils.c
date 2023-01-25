@@ -7,11 +7,6 @@ enum {VAR, PRO, FUN, PAR};
 enum {VAL, REF};
 //#include <string.h>
 
-typedef struct list{
-    int tipo;
-    struct list *prox;
-}lista; 
-
 struct elemTabSimbolos {
     char id[100];  // identificador
     int end;       // endereço
@@ -19,7 +14,7 @@ struct elemTabSimbolos {
     int esc;       //escopo global ou local
     int rot;       //rotulo função
     int cat;       //categoria: variavel, procedimento, funcao, parametro
-    lista *par;    //lista de parametros da rotina
+    int par[20];    //lista de parametros da rotina
 } tabSimb[TAM_TAB], elemTab;
 
 int posTab = 0;
