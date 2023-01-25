@@ -8,6 +8,25 @@ inicio
        X <- X - 1
    fimenquanto
 fimfunc
+
+func inteiro menor ()
+inicio 
+      X <- 20
+   enquanto X > 10 faca
+       escreva X
+       X <- X - 1
+   fimenquanto
+fimfunc
+
+func inteiro men ()
+inicio 
+      X <- 20
+   enquanto X > 10 faca
+       escreva X
+       X <- X - 1
+   fimenquanto
+fimfunc
+
 inicio
 X <- 50
     se X > 10

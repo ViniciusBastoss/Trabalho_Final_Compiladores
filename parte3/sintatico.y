@@ -84,16 +84,17 @@ rotinas
         fprintf(yyout,"\tDSVS\tL%d\n", rotulo);
         empilha(rotulo);
     } lista_rotinas
+
+    {
+        //marca inicio do programa (main)
+        int rot = desempilha();
+        fprintf(yyout,"L%d\tNADA\n", rot); 
+    }
     ;
 
 lista_rotinas
      : lista_rotinas rotina
      |rotina
-     {
-        //marca inicio do programa (main)
-        int rot = desempilha();
-        fprintf(yyout,"L%d\tNADA\n", rot); 
-     }
      ;
 
 rotina
