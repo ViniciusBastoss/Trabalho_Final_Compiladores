@@ -6,7 +6,7 @@ programa testatipos
     x <- F
     a <- 10
     se a > 1 entao
-        escreva a 
+        escreva 5
       senao escreva b 
     fimse
     enquanto x faca

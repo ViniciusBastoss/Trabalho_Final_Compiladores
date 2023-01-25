@@ -78,12 +78,22 @@ programa
 
 rotinas
     :
-    | lista_rotinas
+    | 
+    {
+        //desvio sempre para inicio programa
+        fprintf(yyout,"\tDSVS\tL%d\n", rotulo);
+        empilha(rotulo);
+    } lista_rotinas
     ;
 
 lista_rotinas
      : lista_rotinas rotina
      |rotina
+     {
+        //marca inicio do programa (main)
+        int rot = desempilha();
+        fprintf(yyout,"L%d\tNADA\n", rot); 
+     }
      ;
 
 rotina
