@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "lexico.c"
 #include "utils.c"
-int contaVar;  //conta numero de variaveis
+int contaVar, contaFunc = 0;  //conta numero de variaveis
 int rotulo = 0; //marca lugares no codigo
 int tipo;
 %}
@@ -83,7 +83,9 @@ rotinas
         //desvio sempre para inicio programa
         fprintf(yyout,"\tDSVS\tL%d\n", rotulo);
         empilha(rotulo);
-    } lista_rotinas
+    } 
+    
+    lista_rotinas
 
     {
         //marca inicio do programa (main)
@@ -95,14 +97,26 @@ rotinas
 lista_rotinas
      : lista_rotinas rotina
      |rotina
+
      ;
 
 rotina
-     :funcao
+     :{
+        fprintf(yyout,"\tENSP\tL%d\n", ++rotulo);
+      }
+     funcao
      
 
 funcao
-     : T_FUNC tipo T_IDENTIF T_ABRE lista_parametros T_FECHA
+     : T_FUNC tipo T_IDENTIF 
+     {
+        strcpy(elemTab.id, atomo);
+       // elemTab.end = contaFunc;
+        elemTab.tip = tipo;
+        insereSimbolo(elemTab);
+        //contaFunc++;
+     }
+     T_ABRE lista_parametros T_FECHA
      variaveis T_INICIO lista_comandos T_FIMFUNC
 
 lista_parametros
