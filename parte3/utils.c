@@ -9,9 +9,8 @@ enum {VAL, REF};
 
 typedef struct list{
     int tipo;
-    int valor;
     struct list *prox;
-}lista;
+}lista; 
 
 struct elemTabSimbolos {
     char id[100];  // identificador
@@ -20,7 +19,6 @@ struct elemTabSimbolos {
     int esc;       //escopo global ou local
     int rot;       //rotulo função
     int cat;       //categoria: variavel, procedimento, funcao, parametro
-    int mec;       // VAL, REF
     lista *par;    //lista de parametros da rotina
 } tabSimb[TAM_TAB], elemTab;
 

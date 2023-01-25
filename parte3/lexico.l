@@ -27,6 +27,9 @@ faca           return T_FACA;
 fimenquanto    return T_FIMENQTO; 
 inteiro        return T_INTEIRO;
 logico         return T_LOGICO;
+func           return T_FUNC;
+fimfunc        return T_FIMFUNC;
+
 
 "+"             return T_MAIS;
 "-"             return T_MENOS;

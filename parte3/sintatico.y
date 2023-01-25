@@ -40,6 +40,10 @@ int tipo;
 %token T_F
 %token T_IDENTIF
 %token T_NUMERO
+%token T_FUNC
+%token T_FIMFUNC
+
+
 
 %start programa
 
@@ -62,6 +66,7 @@ programa
                fprintf(yyout,"\tAMEM\t%d\n", contaVar); 
             }
         }
+       rotinas
       T_INICIO lista_comandos T_FIM
         { 
             int conta = desempilha();
@@ -70,6 +75,32 @@ programa
             fprintf(yyout, "\tFIMP\n");    
         }
     ;
+
+rotinas
+    :
+    | lista_rotinas
+    ;
+
+lista_rotinas
+     : lista_rotinas rotina
+     |rotina
+     ;
+
+rotina
+     :funcao
+     
+
+funcao
+     : T_FUNC tipo T_IDENTIF T_ABRE lista_parametros T_FECHA
+     variaveis T_INICIO lista_comandos T_FIMFUNC
+
+lista_parametros
+       :
+       | parametro lista_parametros
+       ;
+
+parametro
+       : tipo T_IDENTIF
 
 cabecalho
     : T_PROGRAMA T_IDENTIF
@@ -122,7 +153,7 @@ comando
     | repeticao
     | selecao
     | atribuicao
-    //chamada_procedimento
+    | chamada_func
     ;
 
 entrada_saida
@@ -259,8 +290,11 @@ expressao
     ;
 
 //chamada de funcao
+
+
+
 termo
-    : T_IDENTIF
+    : T_IDENTIF   
         {
             int pos = buscaSimbolo(atomo);
             fprintf(yyout,"\tCRVG\t%d\n", tabSimb[pos].end); 

@@ -79,7 +79,9 @@ extern int yydebug;
     T_V = 285,
     T_F = 286,
     T_IDENTIF = 287,
-    T_NUMERO = 288
+    T_NUMERO = 288,
+    T_FUNC = 289,
+    T_FIMFUNC = 290
   };
 #endif
 
