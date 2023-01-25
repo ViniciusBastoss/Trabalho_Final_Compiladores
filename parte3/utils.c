@@ -15,7 +15,7 @@ struct elemTabSimbolos {
     int rot;       //rotulo função
     int cat;       //categoria: variavel, procedimento, funcao, parametro
     int par[20];    //lista de parametros da rotina
-} tabSimb[TAM_TAB], elemTab;
+} tabSimb[TAM_TAB], elemTab; 
 
 int posTab = 0;
 
@@ -63,11 +63,13 @@ void insereSimbolo (struct elemTabSimbolos elem){
 void mostraTabela(){
     puts("Tabela de Simbolos");
     puts("------------------");
-    printf("\n%30s | %s | %s \n", "ID", "END", "TIP");
+    printf("\n%30s | %s | %s |   %s  |%s| %s\n", "ID", "END", "TIP", "ESC", "ROT", "CAT");
     for(int i = 0; i < 50; i++)
-        printf("-");
+        printf("---");
     for(int i = 0; i < posTab; i++)
-        printf("\n%30s | %3d | %s", tabSimb[i].id, tabSimb[i].end, tabSimb[i].tip == INT? "INT" : "LOG");
+    // esc rot cat par
+        printf("\n%30s | %3d | %s | %s | %d | %s", tabSimb[i].id, tabSimb[i].end, tabSimb[i].tip == INT? "INT" : "LOG", 
+        tabSimb[i].esc == GLOBAL? "GLOBAL" : "LOCAL", tabSimb[i].rot, tabSimb[i].cat == VAR? "VAR" : tabSimb[i].cat == PRO? "PRO" : tabSimb[i].cat == FUN? "FUN" : "PAR");//VAR, PRO, FUN, PAR
     printf("\n");
 }
 

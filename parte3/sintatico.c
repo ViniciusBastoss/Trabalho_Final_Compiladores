@@ -569,8 +569,8 @@ static const yytype_int16 yyrline[] =
      123,   128,   136,   147,   148,   152,   153,   154,   155,   156,
      160,   161,   165,   173,   182,   187,   181,   206,   214,   205,
      229,   228,   244,   249,   254,   259,   264,   269,   274,   279,
-     284,   289,   294,   297,   298,   300,   305,   311,   316,   321,
-     326,   333
+     284,   289,   294,   297,   298,   300,   303,   309,   314,   319,
+     324,   331
 };
 #endif
 
@@ -1464,7 +1464,7 @@ yyreduce:
     break;
 
   case 56: /* termo: T_IDENTIF  */
-#line 306 "sintatico.y"
+#line 304 "sintatico.y"
         {
             int pos = buscaSimbolo(atomo);
             fprintf(yyout,"\tCRVG\t%d\n", tabSimb[pos].end); 
@@ -1474,7 +1474,7 @@ yyreduce:
     break;
 
   case 57: /* termo: T_NUMERO  */
-#line 312 "sintatico.y"
+#line 310 "sintatico.y"
         {
         fprintf(yyout,"\tCRCT\t%s\n", atomo);
         empilha(INT);
@@ -1483,7 +1483,7 @@ yyreduce:
     break;
 
   case 58: /* termo: T_V  */
-#line 317 "sintatico.y"
+#line 315 "sintatico.y"
         {
         fprintf(yyout,"\tCRCT\t1\n"); 
         empilha(LOG);
@@ -1492,7 +1492,7 @@ yyreduce:
     break;
 
   case 59: /* termo: T_F  */
-#line 322 "sintatico.y"
+#line 320 "sintatico.y"
         {
         fprintf(yyout,"\tCRCT\t0\n"); 
         empilha(LOG);
@@ -1501,7 +1501,7 @@ yyreduce:
     break;
 
   case 60: /* termo: T_NAO termo  */
-#line 327 "sintatico.y"
+#line 325 "sintatico.y"
         {
         int t = desempilha();
         if (t != LOG) yyerror ("Incompatibilidade de tipo!");
@@ -1705,7 +1705,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 335 "sintatico.y"
+#line 333 "sintatico.y"
 
 
 
