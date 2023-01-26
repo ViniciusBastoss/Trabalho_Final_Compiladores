@@ -4,10 +4,10 @@
 #include <stdlib.h>
 #include "lexico.c"
 #include "utils.c"
-int contaVar;  //conta numero de variaveis
+int contaVar, contaVarLocal = 0;  //conta numero de variaveis
 int marcaPar = 0;
 int rotulo = 0; //marca lugares no codigo
-int tipo;
+int tipo, escopo = GLOBAL;
 char identificadores[30];
 %}
 
@@ -115,13 +115,19 @@ funcao
            strcpy(elemTab.id, atomo);
            marcaPar++;
            elemTab.tip = tipo;
+           elemTab.esc = escopo;
            insereSimbolo(elemTab);
+           escopo = LOCAL;
      }
-     T_ABRE lista_parametros T_FECHA
-     variaveis {
-        indicesLocais(marcaPar, contaVar);
-        mostraTabela(); 
-        }T_INICIO lista_comandos T_FIMFUNC
+      T_ABRE lista_parametros T_FECHA
+      variaveis 
+        {
+            printf("\n%d %d\n", marcaPar, contaVar);
+           indicesLocais(marcaPar, contaVar);
+           mostraTabela(); 
+           escopo = GLOBAL;
+        }
+      T_INICIO lista_comandos T_FIMFUNC 
 
 lista_parametros
        :
@@ -134,6 +140,7 @@ parametro
            strcpy(elemTab.id, atomo);
            marcaPar++;
            elemTab.tip = tipo;
+           elemTab.esc = escopo;
            insereSimbolo(elemTab);
          }
 
@@ -160,21 +167,37 @@ tipo
    ;
 
 lista_variaveis
-    : lista_variaveis  T_IDENTIF 
+    : lista_variaveis T_IDENTIF 
          { 
            strcpy(elemTab.id, atomo);
-           elemTab.end = contaVar;
            elemTab.tip = tipo;
-           insereSimbolo(elemTab);
-           contaVar++;
+           elemTab.esc = escopo;
+
+           if(escopo == LOCAL){
+               elemTab.end = contaVarLocal;
+               contaVarLocal++;
+           }
+           else{
+               elemTab.end = contaVar;
+               contaVar++;         
+           }
+           insereSimbolo(elemTab);  
          }
     | T_IDENTIF
         { 
            strcpy(elemTab.id, atomo);
-           elemTab.end = contaVar;
            elemTab.tip = tipo;
-           insereSimbolo(elemTab);
-           contaVar++;      
+           elemTab.esc = escopo;
+
+           if(escopo == LOCAL){
+               elemTab.end = contaVarLocal;
+               contaVarLocal++;
+           }
+           else{
+               elemTab.end = contaVar;
+               contaVar++;         
+           }
+           insereSimbolo(elemTab);   
         }
     ;
 
