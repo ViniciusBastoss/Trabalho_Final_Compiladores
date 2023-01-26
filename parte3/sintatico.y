@@ -8,7 +8,7 @@ int contaVar, contaVarLocal = 0;  //conta numero de variaveis
 int marcaPar = 0;
 int rotulo = 0; //marca lugares no codigo
 int tipo, escopo = GLOBAL;
-char identificadores[30];
+char charAux[10],identificadores[30];
 %}
 
 %token T_PROGRAMA
@@ -104,7 +104,11 @@ lista_rotinas
 
 rotina
      :{
-        fprintf(yyout,"\tENSP\tL%d\n", ++rotulo);
+        //marca a funcao e guarda seu rotulo
+        fprintf(yyout,"L%d\tENSP\n", ++rotulo);
+        strcpy(elemTab.rot,"L");
+        sprintf(charAux, "%d", rotulo);
+        strcat(elemTab.rot, charAux); 
       }
      funcao
      
@@ -116,18 +120,29 @@ funcao
            marcaPar++;
            elemTab.tip = tipo;
            elemTab.esc = escopo;
+           elemTab.cat = FUN;
            insereSimbolo(elemTab);
            escopo = LOCAL;
+           strcpy(elemTab.rot,"");
      }
       T_ABRE lista_parametros T_FECHA
       variaveis 
         {
-            printf("\n%d %d\n", marcaPar, contaVar);
+            //printf("\n%d %d\n", marcaPar, contaVar);
            indicesLocais(marcaPar, contaVar);
            mostraTabela(); 
            escopo = GLOBAL;
+           empilha(contaVarLocal);
+           if(contaVarLocal){
+               fprintf(yyout,"\tAMEM\t%d\n", contaVarLocal); 
+            }
         }
       T_INICIO lista_comandos T_FIMFUNC 
+        { 
+            int conta2 = desempilha();
+            if (conta2)
+               fprintf(yyout,"\tDMEM\t%d\n", conta2);    
+        }
 
 lista_parametros
        :
@@ -141,6 +156,7 @@ parametro
            marcaPar++;
            elemTab.tip = tipo;
            elemTab.esc = escopo;
+           elemTab.cat = PAR;
            insereSimbolo(elemTab);
          }
 
@@ -172,7 +188,7 @@ lista_variaveis
            strcpy(elemTab.id, atomo);
            elemTab.tip = tipo;
            elemTab.esc = escopo;
-
+           elemTab.cat = VAR;
            if(escopo == LOCAL){
                elemTab.end = contaVarLocal;
                contaVarLocal++;
@@ -188,7 +204,7 @@ lista_variaveis
            strcpy(elemTab.id, atomo);
            elemTab.tip = tipo;
            elemTab.esc = escopo;
-
+           elemTab.cat = VAR;
            if(escopo == LOCAL){
                elemTab.end = contaVarLocal;
                contaVarLocal++;

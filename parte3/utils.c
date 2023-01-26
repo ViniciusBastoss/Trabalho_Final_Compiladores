@@ -30,7 +30,7 @@ struct elemTabSimbolos
     int end;      // endereço
     int tip;      // tipo
     int esc;      // escopo global ou local
-    int rot;      // rotulo função
+    char rot[10];      // rotulo função
     int cat;      // categoria: variavel, funcao, parametro
     int par[20];  // lista de parametros da rotina
 } tabSimb[TAM_TAB], elemTab;
@@ -91,7 +91,7 @@ void mostraTabela()
     for (int i = 0; i < posTab; i++)
     {
         // esc rot cat par
-        printf("\n%30s | %3d | %s | %s | %d | %s  |", tabSimb[i].id, tabSimb[i].end, tabSimb[i].tip == INT ? "INT" : "LOG",
+        printf("\n%30s | %3d | %s | %s | %s | %s  |", tabSimb[i].id, tabSimb[i].end, tabSimb[i].tip == INT ? "INT" : "LOG",
                tabSimb[i].esc == GLOBAL ? "GLOBAL" : "LOCAL", tabSimb[i].rot, tabSimb[i].cat == VAR ? "VAR" : tabSimb[i].cat == FUN ? "FUN" : "PAR"); // VAR, PRO, FUN, PAR
                if(tabSimb[i].cat == FUN)
                   for(int j = 0; j < 20 ; j++){

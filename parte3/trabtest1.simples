@@ -4,10 +4,10 @@ func inteiro maior (inteiro a inteiro b inteiro c)
 inteiro H K
 inicio 
    se a > b
-      entao retorne a
-      senao retorne b 
+      entao escreva a
+      senao escreva b 
     fimse
 fimfunc
 inicio
-   escreva maior (10 20 40)
+   maior (10 20 40)
 fimprograma     
