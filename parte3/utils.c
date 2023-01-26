@@ -158,3 +158,17 @@ void indicesLocais(int marcaPar, int contaVar){
     tabSimb[contaVar].par[j] = LIXO;
 
 }
+//ao processar os parametros da funcao o tipo de cada parametro é empilhado, assim desempilhamos e testamos com os tipos aceitos pela funcao
+void confereParametros(int posFunc){
+    int t1, t2, j = 0;
+    for(; tabSimb[posFunc].par[j] != LIXO; j++);
+       for(int i = j - 1; i >= 0; i--){
+           t1 = desempilha();
+           t2 = tabSimb[posFunc].par[i];
+           if(t1 != t2)
+              yyerror("Erro na passagem de parametro da função!");
+        }
+        t1 = desempilha();
+        if(t1 != LIXO)
+           yyerror("Erro na passagem de parametro da função2!");
+}

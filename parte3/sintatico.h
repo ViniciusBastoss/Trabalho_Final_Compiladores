@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.5.1.  */
+/* A Bison parser, made by GNU Bison 3.8.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -31,8 +31,9 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
 
 #ifndef YY_YY_SINTATICO_H_INCLUDED
 # define YY_YY_SINTATICO_H_INCLUDED
@@ -44,45 +45,51 @@
 extern int yydebug;
 #endif
 
-/* Token type.  */
+/* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    T_PROGRAMA = 258,
-    T_INICIO = 259,
-    T_FIM = 260,
-    T_LEIA = 261,
-    T_ESCREVA = 262,
-    T_SE = 263,
-    T_ENTAO = 264,
-    T_SENAO = 265,
-    T_FIMSE = 266,
-    T_ENQTO = 267,
-    T_FACA = 268,
-    T_FIMENQTO = 269,
-    T_INTEIRO = 270,
-    T_LOGICO = 271,
-    T_MAIS = 272,
-    T_MENOS = 273,
-    T_VEZES = 274,
-    T_DIV = 275,
-    T_ATRIBUI = 276,
-    T_MAIOR = 277,
-    T_MENOR = 278,
-    T_IGUAL = 279,
-    T_E = 280,
-    T_OU = 281,
-    T_NAO = 282,
-    T_ABRE = 283,
-    T_FECHA = 284,
-    T_V = 285,
-    T_F = 286,
-    T_IDENTIF = 287,
-    T_NUMERO = 288,
-    T_FUNC = 289,
-    T_FIMFUNC = 290
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    T_PROGRAMA = 258,              /* T_PROGRAMA  */
+    T_INICIO = 259,                /* T_INICIO  */
+    T_FIM = 260,                   /* T_FIM  */
+    T_LEIA = 261,                  /* T_LEIA  */
+    T_ESCREVA = 262,               /* T_ESCREVA  */
+    T_SE = 263,                    /* T_SE  */
+    T_ENTAO = 264,                 /* T_ENTAO  */
+    T_SENAO = 265,                 /* T_SENAO  */
+    T_FIMSE = 266,                 /* T_FIMSE  */
+    T_ENQTO = 267,                 /* T_ENQTO  */
+    T_FACA = 268,                  /* T_FACA  */
+    T_FIMENQTO = 269,              /* T_FIMENQTO  */
+    T_INTEIRO = 270,               /* T_INTEIRO  */
+    T_LOGICO = 271,                /* T_LOGICO  */
+    T_MAIS = 272,                  /* T_MAIS  */
+    T_MENOS = 273,                 /* T_MENOS  */
+    T_VEZES = 274,                 /* T_VEZES  */
+    T_DIV = 275,                   /* T_DIV  */
+    T_ATRIBUI = 276,               /* T_ATRIBUI  */
+    T_MAIOR = 277,                 /* T_MAIOR  */
+    T_MENOR = 278,                 /* T_MENOR  */
+    T_IGUAL = 279,                 /* T_IGUAL  */
+    T_E = 280,                     /* T_E  */
+    T_OU = 281,                    /* T_OU  */
+    T_NAO = 282,                   /* T_NAO  */
+    T_ABRE = 283,                  /* T_ABRE  */
+    T_FECHA = 284,                 /* T_FECHA  */
+    T_V = 285,                     /* T_V  */
+    T_F = 286,                     /* T_F  */
+    T_IDENTIF = 287,               /* T_IDENTIF  */
+    T_NUMERO = 288,                /* T_NUMERO  */
+    T_FUNC = 289,                  /* T_FUNC  */
+    T_FIMFUNC = 290,               /* T_FIMFUNC  */
+    T_RETORNE = 291                /* T_RETORNE  */
   };
+  typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
@@ -95,6 +102,8 @@ typedef int YYSTYPE;
 
 extern YYSTYPE yylval;
 
+
 int yyparse (void);
+
 
 #endif /* !YY_YY_SINTATICO_H_INCLUDED  */

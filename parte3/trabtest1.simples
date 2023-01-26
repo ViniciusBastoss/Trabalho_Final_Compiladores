@@ -1,13 +1,15 @@
 programa trabtest1
 inteiro X
-func inteiro maior (inteiro a inteiro b )
+logico  m
+func inteiro maior (inteiro a inteiro b inteiro c inteiro v)
 inteiro H K
 inicio 
-   se X > b
+   se X > a
       entao escreva a
-      senao escreva b 
+      senao escreva a
     fimse
 fimfunc
 inicio
-   maior (10 X)
+   maior (10 1 5 9 )
+   X <- X
 fimprograma     

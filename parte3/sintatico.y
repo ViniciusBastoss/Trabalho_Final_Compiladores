@@ -44,6 +44,7 @@ char charAux[10],identificadores[30];
 %token T_NUMERO
 %token T_FUNC
 %token T_FIMFUNC
+%token T_RETORNE
 
 
 
@@ -369,8 +370,13 @@ expressao
 //pega o id da funcao e marca o desvio sempre
 chamada_func
      : T_IDENTIF {aux = buscaSimbolo(atomo);}
-     T_ABRE lista_argumentos T_FECHA
+     T_ABRE 
      {
+        empilha(LIXO);
+     }
+     lista_argumentos T_FECHA
+     {
+        confereParametros(aux);
         fprintf(yyout,"\tSVCP\n");
         fprintf(yyout,"\tDSVS\t%s\n",tabSimb[aux].rot);
      }
@@ -379,7 +385,9 @@ lista_argumentos
      : lista_argumentos argumento
      |
 
-argumento: expressao
+argumento: expressao 
+
+
 
 termo
     : T_IDENTIF   
