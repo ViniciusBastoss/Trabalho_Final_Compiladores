@@ -7,7 +7,7 @@
 int contaVar, contaVarLocal = 0;  //conta numero de variaveis
 int marcaPar = 0;
 int rotulo = 0; //marca lugares no codigo
-int tipo, escopo = GLOBAL;
+int tipo, escopo = GLOBAL, aux;
 char charAux[10],identificadores[30];
 %}
 
@@ -141,7 +141,9 @@ funcao
         { 
             int conta2 = desempilha();
             if (conta2)
-               fprintf(yyout,"\tDMEM\t%d\n", conta2);    
+               fprintf(yyout,"\tDMEM\t%d\n", conta2);
+            if(marcaPar - 1)    
+               fprintf(yyout,"\tRTSP\t%d\n", marcaPar - 1);
         }
 
 lista_parametros
@@ -364,8 +366,14 @@ expressao
     ;
 
 //chamada de funcao
+//pega o id da funcao e marca o desvio sempre
 chamada_func
-     : T_IDENTIF T_ABRE lista_argumentos T_FECHA
+     : T_IDENTIF {aux = buscaSimbolo(atomo);}
+     T_ABRE lista_argumentos T_FECHA
+     {
+        fprintf(yyout,"\tSVCP\n");
+        fprintf(yyout,"\tDSVS\t%s\n",tabSimb[aux].rot);
+     }
 
 lista_argumentos
      : lista_argumentos argumento
@@ -377,7 +385,10 @@ termo
     : T_IDENTIF   
         {
             int pos = buscaSimbolo(atomo);
-            fprintf(yyout,"\tCRVG\t%d\n", tabSimb[pos].end); 
+            if(tabSimb[pos].esc == GLOBAL)
+              fprintf(yyout,"\tCRVG\t%d\n", tabSimb[pos].end); 
+            else
+               fprintf(yyout,"\tCRVL\t%d\n", tabSimb[pos].end);
             empilha(tabSimb[pos].tip);
         }
     | T_NUMERO

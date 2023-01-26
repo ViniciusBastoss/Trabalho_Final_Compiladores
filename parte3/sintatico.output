@@ -89,19 +89,21 @@ Grammar
    53          | expressao T_OU expressao
    54          | termo
 
-   55 chamada_func: T_IDENTIF T_ABRE lista_argumentos T_FECHA
+   55 $@12: %empty
 
-   56 lista_argumentos: lista_argumentos argumento
-   57                 | %empty
+   56 chamada_func: T_IDENTIF $@12 T_ABRE lista_argumentos T_FECHA
 
-   58 argumento: expressao
+   57 lista_argumentos: lista_argumentos argumento
+   58                 | %empty
 
-   59 termo: T_IDENTIF
-   60      | T_NUMERO
-   61      | T_V
-   62      | T_F
-   63      | T_NAO termo
-   64      | T_ABRE expressao T_FECHA
+   59 argumento: expressao
+
+   60 termo: T_IDENTIF
+   61      | T_NUMERO
+   62      | T_V
+   63      | T_F
+   64      | T_NAO termo
+   65      | T_ABRE expressao T_FECHA
 
 
 Terminals, with rules where they appear
@@ -132,13 +134,13 @@ Terminals, with rules where they appear
     T_IGUAL (279) 51
     T_E (280) 52
     T_OU (281) 53
-    T_NAO (282) 63
-    T_ABRE (283) 13 55 64
-    T_FECHA (284) 13 55 64
-    T_V (285) 61
-    T_F (286) 62
-    T_IDENTIF (287) 13 16 17 24 25 35 44 55 59
-    T_NUMERO (288) 60
+    T_NAO (282) 64
+    T_ABRE (283) 13 56 65
+    T_FECHA (284) 13 56 65
+    T_V (285) 62
+    T_F (286) 63
+    T_IDENTIF (287) 13 16 17 24 25 35 44 56 60
+    T_NUMERO (288) 61
     T_FUNC (289) 13
     T_FIMFUNC (290) 13
 
@@ -242,19 +244,22 @@ Nonterminals, with rules where they appear
         on right: 44
     expressao (68)
         on left: 45 46 47 48 49 50 51 52 53 54
-        on right: 36 39 42 44 45 46 47 48 49 50 51 52 53 58 64
+        on right: 36 39 42 44 45 46 47 48 49 50 51 52 53 59 65
     chamada_func (69)
-        on left: 55
+        on left: 56
         on right: 32
-    lista_argumentos (70)
-        on left: 56 57
-        on right: 55 56
-    argumento (71)
-        on left: 58
+    $@12 (70)
+        on left: 55
         on right: 56
-    termo (72)
-        on left: 59 60 61 62 63 64
-        on right: 54 63
+    lista_argumentos (71)
+        on left: 57 58
+        on right: 56 57
+    argumento (72)
+        on left: 59
+        on right: 57
+    termo (73)
+        on left: 60 61 62 63 64 65
+        on right: 54 64
 
 
 State 0
@@ -524,13 +529,13 @@ State 26
 State 27
 
    44 atribuicao: T_IDENTIF . $@11 T_ATRIBUI expressao
-   55 chamada_func: T_IDENTIF . T_ABRE lista_argumentos T_FECHA
+   56 chamada_func: T_IDENTIF . $@12 T_ABRE lista_argumentos T_FECHA
 
-    T_ABRE  shift, and go to state 51
-
+    T_ABRE    reduce using rule 55 ($@12)
     $default  reduce using rule 43 ($@11)
 
-    $@11  go to state 52
+    $@11  go to state 51
+    $@12  go to state 52
 
 
 State 28
@@ -645,7 +650,7 @@ State 40
 
 State 41
 
-   63 termo: T_NAO . termo
+   64 termo: T_NAO . termo
 
     T_NAO      shift, and go to state 41
     T_ABRE     shift, and go to state 42
@@ -659,7 +664,7 @@ State 41
 
 State 42
 
-   64 termo: T_ABRE . expressao T_FECHA
+   65 termo: T_ABRE . expressao T_FECHA
 
     T_NAO      shift, and go to state 41
     T_ABRE     shift, and go to state 42
@@ -674,30 +679,30 @@ State 42
 
 State 43
 
-   61 termo: T_V .
-
-    $default  reduce using rule 61 (termo)
-
-
-State 44
-
-   62 termo: T_F .
+   62 termo: T_V .
 
     $default  reduce using rule 62 (termo)
 
 
+State 44
+
+   63 termo: T_F .
+
+    $default  reduce using rule 63 (termo)
+
+
 State 45
 
-   59 termo: T_IDENTIF .
+   60 termo: T_IDENTIF .
 
-    $default  reduce using rule 59 (termo)
+    $default  reduce using rule 60 (termo)
 
 
 State 46
 
-   60 termo: T_NUMERO .
+   61 termo: T_NUMERO .
 
-    $default  reduce using rule 60 (termo)
+    $default  reduce using rule 61 (termo)
 
 
 State 47
@@ -775,18 +780,16 @@ State 50
 
 State 51
 
-   55 chamada_func: T_IDENTIF T_ABRE . lista_argumentos T_FECHA
+   44 atribuicao: T_IDENTIF $@11 . T_ATRIBUI expressao
 
-    $default  reduce using rule 57 (lista_argumentos)
-
-    lista_argumentos  go to state 69
+    T_ATRIBUI  shift, and go to state 69
 
 
 State 52
 
-   44 atribuicao: T_IDENTIF $@11 . T_ATRIBUI expressao
+   56 chamada_func: T_IDENTIF $@12 . T_ABRE lista_argumentos T_FECHA
 
-    T_ATRIBUI  shift, and go to state 70
+    T_ABRE  shift, and go to state 70
 
 
 State 53
@@ -812,9 +815,9 @@ State 55
 
 State 56
 
-   63 termo: T_NAO termo .
+   64 termo: T_NAO termo .
 
-    $default  reduce using rule 63 (termo)
+    $default  reduce using rule 64 (termo)
 
 
 State 57
@@ -828,7 +831,7 @@ State 57
    51          | expressao . T_IGUAL expressao
    52          | expressao . T_E expressao
    53          | expressao . T_OU expressao
-   64 termo: T_ABRE expressao . T_FECHA
+   65 termo: T_ABRE expressao . T_FECHA
 
     T_MAIS   shift, and go to state 58
     T_MENOS  shift, and go to state 59
@@ -1013,24 +1016,6 @@ State 68
 
 State 69
 
-   55 chamada_func: T_IDENTIF T_ABRE lista_argumentos . T_FECHA
-   56 lista_argumentos: lista_argumentos . argumento
-
-    T_NAO      shift, and go to state 41
-    T_ABRE     shift, and go to state 42
-    T_FECHA    shift, and go to state 84
-    T_V        shift, and go to state 43
-    T_F        shift, and go to state 44
-    T_IDENTIF  shift, and go to state 45
-    T_NUMERO   shift, and go to state 46
-
-    expressao  go to state 85
-    argumento  go to state 86
-    termo      go to state 48
-
-
-State 70
-
    44 atribuicao: T_IDENTIF $@11 T_ATRIBUI . expressao
 
     T_NAO      shift, and go to state 41
@@ -1040,8 +1025,17 @@ State 70
     T_IDENTIF  shift, and go to state 45
     T_NUMERO   shift, and go to state 46
 
-    expressao  go to state 87
+    expressao  go to state 84
     termo      go to state 48
+
+
+State 70
+
+   56 chamada_func: T_IDENTIF $@12 T_ABRE . lista_argumentos T_FECHA
+
+    $default  reduce using rule 58 (lista_argumentos)
+
+    lista_argumentos  go to state 85
 
 
 State 71
@@ -1050,14 +1044,14 @@ State 71
 
     $default  reduce using rule 11 ($@5)
 
-    $@5  go to state 88
+    $@5  go to state 86
 
 
 State 72
 
-   64 termo: T_ABRE expressao T_FECHA .
+   65 termo: T_ABRE expressao T_FECHA .
 
-    $default  reduce using rule 64 (termo)
+    $default  reduce using rule 65 (termo)
 
 
 State 73
@@ -1255,7 +1249,7 @@ State 82
 
     $default  reduce using rule 26 (lista_comandos)
 
-    lista_comandos  go to state 89
+    lista_comandos  go to state 87
     comando         go to state 29
     entrada_saida   go to state 30
     leitura         go to state 31
@@ -1272,50 +1266,10 @@ State 83
 
     $default  reduce using rule 38 ($@8)
 
-    $@8  go to state 90
+    $@8  go to state 88
 
 
 State 84
-
-   55 chamada_func: T_IDENTIF T_ABRE lista_argumentos T_FECHA .
-
-    $default  reduce using rule 55 (chamada_func)
-
-
-State 85
-
-   45 expressao: expressao . T_VEZES expressao
-   46          | expressao . T_DIV expressao
-   47          | expressao . T_MAIS expressao
-   48          | expressao . T_MENOS expressao
-   49          | expressao . T_MAIOR expressao
-   50          | expressao . T_MENOR expressao
-   51          | expressao . T_IGUAL expressao
-   52          | expressao . T_E expressao
-   53          | expressao . T_OU expressao
-   58 argumento: expressao .
-
-    T_MAIS   shift, and go to state 58
-    T_MENOS  shift, and go to state 59
-    T_VEZES  shift, and go to state 60
-    T_DIV    shift, and go to state 61
-    T_MAIOR  shift, and go to state 62
-    T_MENOR  shift, and go to state 63
-    T_IGUAL  shift, and go to state 64
-    T_E      shift, and go to state 65
-    T_OU     shift, and go to state 66
-
-    $default  reduce using rule 58 (argumento)
-
-
-State 86
-
-   56 lista_argumentos: lista_argumentos argumento .
-
-    $default  reduce using rule 56 (lista_argumentos)
-
-
-State 87
 
    44 atribuicao: T_IDENTIF $@11 T_ATRIBUI expressao .
    45 expressao: expressao . T_VEZES expressao
@@ -1341,21 +1295,39 @@ State 87
     $default  reduce using rule 44 (atribuicao)
 
 
-State 88
+State 85
+
+   56 chamada_func: T_IDENTIF $@12 T_ABRE lista_argumentos . T_FECHA
+   57 lista_argumentos: lista_argumentos . argumento
+
+    T_NAO      shift, and go to state 41
+    T_ABRE     shift, and go to state 42
+    T_FECHA    shift, and go to state 89
+    T_V        shift, and go to state 43
+    T_F        shift, and go to state 44
+    T_IDENTIF  shift, and go to state 45
+    T_NUMERO   shift, and go to state 46
+
+    expressao  go to state 90
+    argumento  go to state 91
+    termo      go to state 48
+
+
+State 86
 
    13 funcao: T_FUNC tipo T_IDENTIF $@5 . T_ABRE lista_parametros T_FECHA variaveis $@6 T_INICIO lista_comandos T_FIMFUNC
 
-    T_ABRE  shift, and go to state 91
+    T_ABRE  shift, and go to state 92
 
 
-State 89
+State 87
 
    42 selecao: T_SE expressao T_ENTAO $@9 lista_comandos . T_SENAO $@10 lista_comandos T_FIMSE
 
-    T_SENAO  shift, and go to state 92
+    T_SENAO  shift, and go to state 93
 
 
-State 90
+State 88
 
    39 repeticao: T_ENQTO $@7 expressao T_FACA $@8 . lista_comandos T_FIMENQTO
 
@@ -1367,7 +1339,7 @@ State 90
 
     $default  reduce using rule 26 (lista_comandos)
 
-    lista_comandos  go to state 93
+    lista_comandos  go to state 94
     comando         go to state 29
     entrada_saida   go to state 30
     leitura         go to state 31
@@ -1378,7 +1350,47 @@ State 90
     chamada_func    go to state 36
 
 
+State 89
+
+   56 chamada_func: T_IDENTIF $@12 T_ABRE lista_argumentos T_FECHA .
+
+    $default  reduce using rule 56 (chamada_func)
+
+
+State 90
+
+   45 expressao: expressao . T_VEZES expressao
+   46          | expressao . T_DIV expressao
+   47          | expressao . T_MAIS expressao
+   48          | expressao . T_MENOS expressao
+   49          | expressao . T_MAIOR expressao
+   50          | expressao . T_MENOR expressao
+   51          | expressao . T_IGUAL expressao
+   52          | expressao . T_E expressao
+   53          | expressao . T_OU expressao
+   59 argumento: expressao .
+
+    T_MAIS   shift, and go to state 58
+    T_MENOS  shift, and go to state 59
+    T_VEZES  shift, and go to state 60
+    T_DIV    shift, and go to state 61
+    T_MAIOR  shift, and go to state 62
+    T_MENOR  shift, and go to state 63
+    T_IGUAL  shift, and go to state 64
+    T_E      shift, and go to state 65
+    T_OU     shift, and go to state 66
+
+    $default  reduce using rule 59 (argumento)
+
+
 State 91
+
+   57 lista_argumentos: lista_argumentos argumento .
+
+    $default  reduce using rule 57 (lista_argumentos)
+
+
+State 92
 
    13 funcao: T_FUNC tipo T_IDENTIF $@5 T_ABRE . lista_parametros T_FECHA variaveis $@6 T_INICIO lista_comandos T_FIMFUNC
 
@@ -1387,35 +1399,35 @@ State 91
 
     $default  reduce using rule 14 (lista_parametros)
 
-    lista_parametros  go to state 94
-    parametro         go to state 95
-    tipo              go to state 96
+    lista_parametros  go to state 95
+    parametro         go to state 96
+    tipo              go to state 97
 
 
-State 92
+State 93
 
    42 selecao: T_SE expressao T_ENTAO $@9 lista_comandos T_SENAO . $@10 lista_comandos T_FIMSE
 
     $default  reduce using rule 41 ($@10)
 
-    $@10  go to state 97
-
-
-State 93
-
-   39 repeticao: T_ENQTO $@7 expressao T_FACA $@8 lista_comandos . T_FIMENQTO
-
-    T_FIMENQTO  shift, and go to state 98
+    $@10  go to state 98
 
 
 State 94
 
-   13 funcao: T_FUNC tipo T_IDENTIF $@5 T_ABRE lista_parametros . T_FECHA variaveis $@6 T_INICIO lista_comandos T_FIMFUNC
+   39 repeticao: T_ENQTO $@7 expressao T_FACA $@8 lista_comandos . T_FIMENQTO
 
-    T_FECHA  shift, and go to state 99
+    T_FIMENQTO  shift, and go to state 99
 
 
 State 95
+
+   13 funcao: T_FUNC tipo T_IDENTIF $@5 T_ABRE lista_parametros . T_FECHA variaveis $@6 T_INICIO lista_comandos T_FIMFUNC
+
+    T_FECHA  shift, and go to state 100
+
+
+State 96
 
    15 lista_parametros: parametro . lista_parametros
 
@@ -1424,19 +1436,19 @@ State 95
 
     $default  reduce using rule 14 (lista_parametros)
 
-    lista_parametros  go to state 100
-    parametro         go to state 95
-    tipo              go to state 96
-
-
-State 96
-
-   16 parametro: tipo . T_IDENTIF
-
-    T_IDENTIF  shift, and go to state 101
+    lista_parametros  go to state 101
+    parametro         go to state 96
+    tipo              go to state 97
 
 
 State 97
+
+   16 parametro: tipo . T_IDENTIF
+
+    T_IDENTIF  shift, and go to state 102
+
+
+State 98
 
    42 selecao: T_SE expressao T_ENTAO $@9 lista_comandos T_SENAO $@10 . lista_comandos T_FIMSE
 
@@ -1448,7 +1460,7 @@ State 97
 
     $default  reduce using rule 26 (lista_comandos)
 
-    lista_comandos  go to state 102
+    lista_comandos  go to state 103
     comando         go to state 29
     entrada_saida   go to state 30
     leitura         go to state 31
@@ -1459,14 +1471,14 @@ State 97
     chamada_func    go to state 36
 
 
-State 98
+State 99
 
    39 repeticao: T_ENQTO $@7 expressao T_FACA $@8 lista_comandos T_FIMENQTO .
 
     $default  reduce using rule 39 (repeticao)
 
 
-State 99
+State 100
 
    13 funcao: T_FUNC tipo T_IDENTIF $@5 T_ABRE lista_parametros T_FECHA . variaveis $@6 T_INICIO lista_comandos T_FIMFUNC
 
@@ -1475,56 +1487,56 @@ State 99
 
     $default  reduce using rule 18 (variaveis)
 
-    variaveis             go to state 103
+    variaveis             go to state 104
     declaracao_variaveis  go to state 10
     tipo                  go to state 11
 
 
-State 100
+State 101
 
    15 lista_parametros: parametro lista_parametros .
 
     $default  reduce using rule 15 (lista_parametros)
 
 
-State 101
+State 102
 
    16 parametro: tipo T_IDENTIF .
 
     $default  reduce using rule 16 (parametro)
 
 
-State 102
+State 103
 
    42 selecao: T_SE expressao T_ENTAO $@9 lista_comandos T_SENAO $@10 lista_comandos . T_FIMSE
 
-    T_FIMSE  shift, and go to state 104
+    T_FIMSE  shift, and go to state 105
 
 
-State 103
+State 104
 
    13 funcao: T_FUNC tipo T_IDENTIF $@5 T_ABRE lista_parametros T_FECHA variaveis . $@6 T_INICIO lista_comandos T_FIMFUNC
 
     $default  reduce using rule 12 ($@6)
 
-    $@6  go to state 105
+    $@6  go to state 106
 
 
-State 104
+State 105
 
    42 selecao: T_SE expressao T_ENTAO $@9 lista_comandos T_SENAO $@10 lista_comandos T_FIMSE .
 
     $default  reduce using rule 42 (selecao)
 
 
-State 105
+State 106
 
    13 funcao: T_FUNC tipo T_IDENTIF $@5 T_ABRE lista_parametros T_FECHA variaveis $@6 . T_INICIO lista_comandos T_FIMFUNC
 
-    T_INICIO  shift, and go to state 106
+    T_INICIO  shift, and go to state 107
 
 
-State 106
+State 107
 
    13 funcao: T_FUNC tipo T_IDENTIF $@5 T_ABRE lista_parametros T_FECHA variaveis $@6 T_INICIO . lista_comandos T_FIMFUNC
 
@@ -1536,7 +1548,7 @@ State 106
 
     $default  reduce using rule 26 (lista_comandos)
 
-    lista_comandos  go to state 107
+    lista_comandos  go to state 108
     comando         go to state 29
     entrada_saida   go to state 30
     leitura         go to state 31
@@ -1547,14 +1559,14 @@ State 106
     chamada_func    go to state 36
 
 
-State 107
+State 108
 
    13 funcao: T_FUNC tipo T_IDENTIF $@5 T_ABRE lista_parametros T_FECHA variaveis $@6 T_INICIO lista_comandos . T_FIMFUNC
 
-    T_FIMFUNC  shift, and go to state 108
+    T_FIMFUNC  shift, and go to state 109
 
 
-State 108
+State 109
 
    13 funcao: T_FUNC tipo T_IDENTIF $@5 T_ABRE lista_parametros T_FECHA variaveis $@6 T_INICIO lista_comandos T_FIMFUNC .
 

@@ -3,7 +3,7 @@ inteiro X
 func inteiro maior (inteiro a inteiro b inteiro c)
 inteiro H K
 inicio 
-   se a > b
+   se X > b
       entao escreva a
       senao escreva b 
     fimse
