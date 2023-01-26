@@ -1,6 +1,6 @@
 programa trabtest1
 inteiro X
-func inteiro maior (inteiro a inteiro b inteiro c)
+func inteiro maior (inteiro a inteiro b )
 inteiro H K
 inicio 
    se X > b
@@ -9,5 +9,5 @@ inicio
     fimse
 fimfunc
 inicio
-   maior (10 20 40)
+   maior (10 X)
 fimprograma     

@@ -4,7 +4,8 @@
 enum
 {
     INT,
-    LOG
+    LOG,
+    LIXO
 };
 enum
 {
@@ -35,6 +36,11 @@ struct elemTabSimbolos
     int par[20];  // lista de parametros da rotina
 } tabSimb[TAM_TAB], elemTab;
 
+void lixoParametros(){
+    for(int i = 0; i < TAM_TAB; i++)
+       for(int j = 0; j < 20; j++)
+         tabSimb[i].par[j] = LIXO;
+}
 int posTab = 0;
 
 int desempilha();
@@ -99,6 +105,9 @@ void mostraTabela()
                        printf("INT ");
                     if(tabSimb[i].par[j] == LOG)
                        printf("LOG ");
+                    if(tabSimb[i].par[j] != INT && tabSimb[i].par[j] != LOG)
+                       j = 20;
+ 
                   }
     }
     printf("\n");
@@ -136,11 +145,16 @@ void testaTipo(int tipo1, int tipo2, int ret)
 }
 //guarda o id correto para as variaveis locais e para a funcao, recebendo o total de variaveis locais + funcao e contaVar
 void indicesLocais(int marcaPar, int contaVar){
-    //obtendo ultimo id
+    //guarda o id da funca e depois no for o id das variaveis ao mesm otempo que colcoa o tipo da variavel no .par da funcao
+    int j = 0;
      marcaPar += 2;
      marcaPar = -1 * marcaPar;
-    for(int i = contaVar; marcaPar <= -3; marcaPar++, i++){
+     tabSimb[contaVar].end = marcaPar;
+     marcaPar++;
+    for(int i = contaVar + 1; marcaPar <= -3; marcaPar++, i++, j++){
         tabSimb[i].end = marcaPar; 
+        tabSimb[contaVar].par[j] = tabSimb[i].tip;
     }
+    tabSimb[contaVar].par[j] = LIXO;
 
 }
