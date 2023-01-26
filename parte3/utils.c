@@ -134,3 +134,13 @@ void testaTipo(int tipo1, int tipo2, int ret)
         yyerror("Incompatibilidade de tipo!");
     empilha(ret);
 }
+//guarda o id correto para as variaveis locais e para a funcao, recebendo o total de variaveis locais + funcao e contaVar
+void indicesLocais(int marcaPar, int contaVar){
+    //obtendo ultimo id
+     marcaPar += 2;
+     marcaPar = -1 * marcaPar;
+    for(int i = contaVar; marcaPar <= -3; marcaPar++, i++){
+        tabSimb[i].end = marcaPar; 
+    }
+
+}

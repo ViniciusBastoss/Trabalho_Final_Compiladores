@@ -4,9 +4,11 @@
 #include <stdlib.h>
 #include "lexico.c"
 #include "utils.c"
-int contaVar, contaFunc = 0;  //conta numero de variaveis
+int contaVar;  //conta numero de variaveis
+int marcaPar = 0;
 int rotulo = 0; //marca lugares no codigo
 int tipo;
+char identificadores[30];
 %}
 
 %token T_PROGRAMA
@@ -36,7 +38,7 @@ int tipo;
 %token T_NAO
 %token T_ABRE
 %token T_FECHA
-%token T_V
+%token T_V            
 %token T_F
 %token T_IDENTIF
 %token T_NUMERO
@@ -110,14 +112,16 @@ rotina
 funcao
      : T_FUNC tipo T_IDENTIF 
      {
-        strcpy(elemTab.id, atomo);
-       // elemTab.end = contaFunc;
-        elemTab.tip = tipo;
-        insereSimbolo(elemTab);
-        //contaFunc++;
+           strcpy(elemTab.id, atomo);
+           marcaPar++;
+           elemTab.tip = tipo;
+           insereSimbolo(elemTab);
      }
      T_ABRE lista_parametros T_FECHA
-     variaveis T_INICIO lista_comandos T_FIMFUNC
+     variaveis {
+        indicesLocais(marcaPar, contaVar);
+        mostraTabela(); 
+        }T_INICIO lista_comandos T_FIMFUNC
 
 lista_parametros
        :
@@ -126,6 +130,12 @@ lista_parametros
 
 parametro
        : tipo T_IDENTIF
+         { 
+           strcpy(elemTab.id, atomo);
+           marcaPar++;
+           elemTab.tip = tipo;
+           insereSimbolo(elemTab);
+         }
 
 cabecalho
     : T_PROGRAMA T_IDENTIF

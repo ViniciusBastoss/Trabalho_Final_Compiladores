@@ -1,5 +1,6 @@
 programa trabtest1
-func inteiro maior (inteiro a inteiro b)
+inteiro X
+func inteiro maior (inteiro a inteiro b inteiro c)
 inicio 
    se a > b
       entao retorne a
@@ -7,5 +8,5 @@ inicio
     fimse
 fimfunc
 inicio
-   escreva maior (10 20)
+   escreva maior (10 20 40)
 fimprograma     
