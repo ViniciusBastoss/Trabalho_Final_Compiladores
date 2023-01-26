@@ -7,7 +7,7 @@
 int contaVar, contaVarLocal = 0;  //conta numero de variaveis
 int marcaPar = 0;
 int rotulo = 0; //marca lugares no codigo
-int tipo, escopo = GLOBAL, aux;
+int tipo, escopo = GLOBAL;
 char charAux[10],identificadores[30];
 %}
 
@@ -132,7 +132,6 @@ funcao
             //printf("\n%d %d\n", marcaPar, contaVar);
            indicesLocais(marcaPar, contaVar);
            mostraTabela(); 
-           escopo = GLOBAL;
            empilha(contaVarLocal);
            if(contaVarLocal){
                fprintf(yyout,"\tAMEM\t%d\n", contaVarLocal); 
@@ -145,6 +144,7 @@ funcao
                fprintf(yyout,"\tDMEM\t%d\n", conta2);
             if(marcaPar - 1)    
                fprintf(yyout,"\tRTSP\t%d\n", marcaPar - 1);
+            escopo = GLOBAL;
         }
 
 lista_parametros
@@ -231,6 +231,14 @@ comando
     | selecao
     | atribuicao
     | chamada_func
+    | T_RETORNE expressao
+    {
+       if(escopo == LOCAL)
+          fprintf(yyout,"\tARZL\t%d\n", aux);
+       else
+           yyerror("Erro lexico!");
+        desempilha();
+    }
     ;
 
 entrada_saida

@@ -1,15 +1,15 @@
 programa trabtest1
 inteiro X
 logico  m
-func inteiro maior (inteiro a inteiro b inteiro c inteiro v)
+func inteiro maior (inteiro a inteiro b inteiro c logico v)
 inteiro H K
 inicio 
    se X > a
-      entao escreva a
-      senao escreva a
+      entao retorne a
+      senao retorne b
     fimse
 fimfunc
 inicio
-   maior (10 1 5 9 )
+   escreva maior (10 1 5 m)
    X <- X
 fimprograma     

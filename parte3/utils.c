@@ -23,6 +23,8 @@ enum
     VAL,
     REF
 };
+
+int aux;
 // #include <string.h>
 
 struct elemTabSimbolos
@@ -150,6 +152,7 @@ void indicesLocais(int marcaPar, int contaVar){
      marcaPar += 2;
      marcaPar = -1 * marcaPar;
      tabSimb[contaVar].end = marcaPar;
+     aux = marcaPar;
      marcaPar++;
     for(int i = contaVar + 1; marcaPar <= -3; marcaPar++, i++, j++){
         tabSimb[i].end = marcaPar; 
