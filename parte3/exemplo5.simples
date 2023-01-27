@@ -3,10 +3,11 @@ inteiro x
 func inteiro recursivo (inteiro n)
 inicio 
    se n > 0
-       entao escreva n  recursivo (n - 1)
+       entao escreva n  
+              recursivo (n - 1)
        senao 
-       retorne 0
     fimse 
+    retorne 0
 fimfunc 
 inicio 
    leia x 

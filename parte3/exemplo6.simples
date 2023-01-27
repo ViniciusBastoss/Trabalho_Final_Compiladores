@@ -1,5 +1,5 @@
 programa recursao
-inteiro x 
+inteiro x y
 func inteiro recursivo (inteiro n)
 inicio 
    se n > 0
@@ -12,9 +12,8 @@ inicio
    leia x 
    se 2 > 5
    entao
-   escreva x
-   x <- 5
-   recursivo (x)
+   escreva y
+   escreva 1 + recursivo (x)
    senao
    fimse
 fimprograma 

@@ -275,10 +275,12 @@ escrita
         desempilha();
         fprintf(yyout, "\tESCR\n");
        }
-     | T_ESCREVA  chamada_func
+
+       //problema aqui
+     /* | T_ESCREVA  chamada_func
          {
             fprintf(yyout, "\tESCR\n");
-         }
+         } */
     ;
 
 leitura
@@ -408,11 +410,12 @@ expressao
             fprintf(yyout,"\tDISJ\n"); 
         }
     | termo
-     | chamada_func{
+
+      /* | chamada_func{
         int tip = buscaSimbolo(charNome);
         tip = tabSimb[tip].tip;
         empilha(tip);
-        } 
+        }    */
     
     ;
 
@@ -430,6 +433,8 @@ chamada_func
         fprintf(yyout,"\tSVCP\n");
         fprintf(yyout,"\tDSVS\t%s\n",tabSimb[aux].rot);
      }
+//
+     | chamada_func T_VEZES expressao
 
 lista_argumentos
      : lista_argumentos argumento
@@ -442,6 +447,7 @@ argumento: expressao
 termo
     : T_IDENTIF   
         {
+            //printf("\nSTRINGG:%s\n",atomo);
             int pos = buscaSimbolo(atomo);
             printf("\nPosicao:%d, %s",tabSimb[pos].end,tabSimb[pos].id);
             if(tabSimb[pos].esc == GLOBAL)

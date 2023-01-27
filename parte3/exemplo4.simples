@@ -3,7 +3,7 @@ inteiro x
 func inteiro fatorial (inteiro a)
 inicio 
    se a > 0
-       entao retorne  a * fatorial (a - 1) 
+       entao retorne   fatorial (a - 1) * a
        senao retorne 1
     fimse 
 fimfunc 
