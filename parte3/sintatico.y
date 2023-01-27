@@ -8,7 +8,7 @@ int contaVar, contaVarLocal = 0;  //conta numero de variaveis
 int marcaPar = 0;
 int rotulo = 0; //marca lugares no codigo
 int tipo, escopo = GLOBAL;
-char charAux[10],identificadores[30];
+char charNome[10], charAux[20];
 %}
 
 %token T_PROGRAMA
@@ -118,6 +118,7 @@ funcao
      : T_FUNC tipo T_IDENTIF 
      {
            strcpy(elemTab.id, atomo);
+           strcpy(charNome, atomo);
            marcaPar++;
            elemTab.tip = tipo;
            elemTab.esc = escopo;
@@ -228,7 +229,10 @@ comando
     | selecao
     | atribuicao
     | chamada_func
-    | T_RETORNE expressao
+    | retorne
+
+retorne 
+     :T_RETORNE expressao
     {
        if(escopo == LOCAL){
            fprintf(yyout,"\tARZL\t%d\n", indFunc);
@@ -257,8 +261,8 @@ comando
         if(marcaPar - 1)    
            fprintf(yyout,"\tRTSP\t%d\n", marcaPar - 1);
     }
-    ;
 
+    ;
 
 entrada_saida
     : leitura
@@ -404,6 +408,12 @@ expressao
             fprintf(yyout,"\tDISJ\n"); 
         }
     | termo
+     | chamada_func{
+        int tip = buscaSimbolo(charNome);
+        tip = tabSimb[tip].tip;
+        empilha(tip);
+        } 
+    
     ;
 
 //chamada de funcao
@@ -433,6 +443,7 @@ termo
     : T_IDENTIF   
         {
             int pos = buscaSimbolo(atomo);
+            printf("\nPosicao:%d, %s",tabSimb[pos].end,tabSimb[pos].id);
             if(tabSimb[pos].esc == GLOBAL)
               fprintf(yyout,"\tCRVG\t%d\n", tabSimb[pos].end); 
             else

@@ -1,0 +1,20 @@
+programa recursao
+inteiro x 
+func inteiro recursivo (inteiro n)
+inicio 
+   se n > 0
+       entao escreva 0 escreva 0 recursivo (5)
+       senao 
+       retorne 0
+    fimse 
+fimfunc 
+inicio 
+   leia x 
+   se 2 > 5
+   entao
+   escreva x
+   x <- 5
+   recursivo (x)
+   senao
+   fimse
+fimprograma 
