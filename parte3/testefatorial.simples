@@ -1,0 +1,11 @@
+programa teste4
+inteiro x 
+func inteiro fatorial (inteiro a)
+inicio 
+     fatorial (4)
+     retorne 1
+fimfunc 
+inicio 
+   leia x 
+   escreva fatorial (x)
+fimprograma 

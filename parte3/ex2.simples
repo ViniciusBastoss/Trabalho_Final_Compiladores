@@ -2,11 +2,12 @@ programa teste1
 inteiro x
 func inteiro maior (inteiro a inteiro b)
 inicio  
-   se a > b
-      entao retorne a
+   x <- a
+   se a < b
+      entao retorne x * 3
       senao retorne b
     fimse
 fimfunc
 inicio
-    maior (10 20)
+    escreva maior (30 20)
 fimprograma

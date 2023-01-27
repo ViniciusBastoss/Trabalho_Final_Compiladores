@@ -132,19 +132,16 @@ funcao
             //printf("\n%d %d\n", marcaPar, contaVar);
            indicesLocais(marcaPar, contaVar);
            mostraTabela(); 
-           empilha(contaVarLocal);
+           //empilha(contaVarLocal);
            if(contaVarLocal){
                fprintf(yyout,"\tAMEM\t%d\n", contaVarLocal); 
             }
         }
       T_INICIO lista_comandos T_FIMFUNC 
         { 
-            int conta2 = desempilha();
-            if (conta2)
-               fprintf(yyout,"\tDMEM\t%d\n", conta2);
-            if(marcaPar - 1)    
-               fprintf(yyout,"\tRTSP\t%d\n", marcaPar - 1);
             escopo = GLOBAL;
+            removeLocais();
+            mostraTabela();
         }
 
 lista_parametros
@@ -233,34 +230,64 @@ comando
     | chamada_func
     | T_RETORNE expressao
     {
-       if(escopo == LOCAL)
-          fprintf(yyout,"\tARZL\t%d\n", aux);
+       if(escopo == LOCAL){
+           fprintf(yyout,"\tARZL\t%d\n", indFunc);
+       }
+          
        else
            yyerror("Erro lexico!");
         desempilha();
+
+        if (contaVarLocal)
+           fprintf(yyout,"\tDMEM\t%d\n", contaVarLocal);
+        if(marcaPar - 1)    
+           fprintf(yyout,"\tRTSP\t%d\n", marcaPar - 1);
+    }
+    | T_RETORNE chamada_func
+    {
+       if(escopo == LOCAL){
+           fprintf(yyout,"\tARZL\t%d\n", indFunc);
+       }
+          
+       else
+           yyerror("Erro lexico!");
+
+        if (contaVarLocal)
+           fprintf(yyout,"\tDMEM\t%d\n", contaVarLocal);
+        if(marcaPar - 1)    
+           fprintf(yyout,"\tRTSP\t%d\n", marcaPar - 1);
     }
     ;
+
 
 entrada_saida
     : leitura
     | escrita
     ;
 
+escrita 
+     : T_ESCREVA  expressao
+       {
+        desempilha();
+        fprintf(yyout, "\tESCR\n");
+       }
+     | T_ESCREVA  chamada_func
+         {
+            fprintf(yyout, "\tESCR\n");
+         }
+    ;
+
 leitura
     : T_LEIA T_IDENTIF
         { 
             int pos = buscaSimbolo(atomo);
-            fprintf(yyout,"\tLEIA\n\tARZG\t%d\n", tabSimb[pos].end); 
+            if(tabSimb[pos].esc == GLOBAL)
+              fprintf(yyout,"\tLEIA\n\tARZG\t%d\n", tabSimb[pos].end); 
+            else
+              fprintf(yyout,"\tLEIA\n\tARZL\t%d\n", tabSimb[pos].end); 
         }
     ;
 
-escrita 
-    : T_ESCREVA expressao
-         { 
-            desempilha();
-            fprintf(yyout,"\tESCR\n"); 
-         }
-    ;
 
 repeticao
     : T_ENQTO 
@@ -309,6 +336,7 @@ selecao
         }
     ;
 
+//modificado: confere o escopo da variavel
 atribuicao
     : T_IDENTIF 
         {
@@ -321,7 +349,11 @@ atribuicao
             int pos = desempilha();
             if (tabSimb[pos].tip != tip)
                yyerror("Incompatibilidade de tipo!");
-            fprintf(yyout,"\tARZG\t%d\n", tabSimb[pos].end); 
+            if(tabSimb[pos].esc == GLOBAL)
+              fprintf(yyout,"\tARZG\t%d\n", tabSimb[pos].end); 
+            else
+              fprintf(yyout,"\tARZL\t%d\n", tabSimb[pos].end); 
+
         }
     ;
 

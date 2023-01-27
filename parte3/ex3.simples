@@ -1,0 +1,15 @@
+programa testafatorial
+  inteiro k
+
+  func inteiro fatorial (inteiro n)
+  inicio 
+    se n = 0
+       entao fatorial <- 1
+       senao fatorial <- n * fatorial 
+    fimse 
+   fimfunc 
+
+   inicio 
+     leia k
+     escreva fatorial (k)
+    fimprograma

@@ -11,5 +11,6 @@ inicio
 fimfunc
 inicio
    escreva maior (10 1 5 m)
+   escreva maior (3 2 7 m)
    X <- X
 fimprograma     

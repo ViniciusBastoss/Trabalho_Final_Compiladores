@@ -24,7 +24,7 @@ enum
     REF
 };
 
-int aux;
+int aux, indFunc;
 // #include <string.h>
 
 struct elemTabSimbolos
@@ -36,7 +36,7 @@ struct elemTabSimbolos
     char rot[10];      // rotulo função
     int cat;      // categoria: variavel, funcao, parametro
     int par[20];  // lista de parametros da rotina
-} tabSimb[TAM_TAB], elemTab;
+} tabSimb[TAM_TAB], elemTab, elemTabaux;
 
 void lixoParametros(){
     for(int i = 0; i < TAM_TAB; i++)
@@ -152,7 +152,8 @@ void indicesLocais(int marcaPar, int contaVar){
      marcaPar += 2;
      marcaPar = -1 * marcaPar;
      tabSimb[contaVar].end = marcaPar;
-     aux = marcaPar;
+     indFunc = marcaPar;
+     printf("\nAux:%d\n", aux);
      marcaPar++;
     for(int i = contaVar + 1; marcaPar <= -3; marcaPar++, i++, j++){
         tabSimb[i].end = marcaPar; 
@@ -174,4 +175,11 @@ void confereParametros(int posFunc){
         t1 = desempilha();
         if(t1 != LIXO)
            yyerror("Erro na passagem de parametro da função2!");
+}
+
+void removeLocais(){
+    for(int i = 0; i < TAM_TAB; i++){
+        if(tabSimb[i].esc == LOCAL)
+        tabSimb[i] = elemTabaux;
+    }
 }
