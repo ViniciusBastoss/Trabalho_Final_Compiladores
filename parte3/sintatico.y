@@ -112,7 +112,9 @@ rotina
         strcat(elemTab.rot, charAux); 
       }
      funcao
-     
+ /*    
+funcoes
+    :funcoes funcao*/
 
 funcao
      : T_FUNC tipo T_IDENTIF 
@@ -277,10 +279,7 @@ escrita
        }
 
        //problema aqui
-     /* | T_ESCREVA  chamada_func
-         {
-            fprintf(yyout, "\tESCR\n");
-         } */
+
     ;
 
 leitura
@@ -420,21 +419,26 @@ expressao
     ;
 
 //chamada de funcao
+
+identificador
+   : T_IDENTIF
+   ;
 //pega o id da funcao e marca o desvio sempre
 chamada_func
-     : T_IDENTIF {aux = buscaSimbolo(atomo);}
+     : T_IDENTIF {aux = buscaSimbolo(atomo);
+                  empilha(LIXO);}
      T_ABRE 
-     {
-        empilha(LIXO);
-     }
+
      lista_argumentos T_FECHA
      {
         confereParametros(aux);
         fprintf(yyout,"\tSVCP\n");
         fprintf(yyout,"\tDSVS\t%s\n",tabSimb[aux].rot);
      }
-//
-     | chamada_func T_VEZES expressao
+     //| T_IDENTIF T_ABRE chamada_func T_FECHA
+      |chamada_func T_VEZES expressao
+     //|expressao T_VEZES chamada_func
+;
 
 lista_argumentos
      : lista_argumentos argumento
@@ -445,7 +449,8 @@ argumento: expressao
 
 
 termo
-    : T_IDENTIF   
+     : identificador chamada_func
+   /* : T_IDENTIF   
         {
             //printf("\nSTRINGG:%s\n",atomo);
             int pos = buscaSimbolo(atomo);
@@ -455,7 +460,7 @@ termo
             else
                fprintf(yyout,"\tCRVL\t%d\n", tabSimb[pos].end);
             empilha(tabSimb[pos].tip);
-        }
+        }*/
     | T_NUMERO
         {
         fprintf(yyout,"\tCRCT\t%s\n", atomo);
