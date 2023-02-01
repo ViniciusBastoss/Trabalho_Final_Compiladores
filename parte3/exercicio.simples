@@ -1,0 +1,16 @@
+programa exercicio
+  inteiro a b 
+inicio 
+   leia a 
+   leia b 
+   se a > b 
+      entao enquanto a > b faca 
+           escreva a 
+           a <- a - 1
+           fimenquanto 
+      senao enquanto a < b faca 
+              escreva a 
+              a <- a + 1 
+              fimenquanto
+    fimse 
+fimprograma 

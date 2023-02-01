@@ -81,9 +81,11 @@ void insereSimbolo(struct elemTabSimbolos elem)
     // i = buscaSimbolo(elem.id);
     if (i != -1)
     {
+        if(tabSimb[i].esc == elem.esc){
         char msg[200];
         sprintf(msg, "Identificador [%s] duplicado!", elem.id);
         yyerror(msg);
+        }
     }
 
     tabSimb[posTab++] = elem;

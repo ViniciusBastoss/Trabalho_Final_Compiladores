@@ -1,0 +1,16 @@
+programa exercicio 
+   inteiro x  y 
+func logico maior (inteiro a inteiro b)
+inicio 
+    retorne  a > b 
+fimfunc 
+
+inicio 
+   leia x
+   leia y
+    maior (x y)
+    se x > y
+      entao escreva x
+      senao escreva y
+    fimse 
+fimprograma

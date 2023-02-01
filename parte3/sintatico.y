@@ -278,8 +278,8 @@ escrita
         fprintf(yyout, "\tESCR\n");
        }
 
-       //problema aqui
-
+       //problema aqui erro de redução junto de expressao T_VEZES chamada_func
+      // | T_ESCREVA chamada_func
     ;
 
 leitura
@@ -409,24 +409,24 @@ expressao
             fprintf(yyout,"\tDISJ\n"); 
         }
     | termo
-
-      /* | chamada_func{
+    //problema gerado: erro rotulos CRVG
+   /* | chamada_func{
         int tip = buscaSimbolo(charNome);
         tip = tabSimb[tip].tip;
         empilha(tip);
-        }    */
+        }  */  
     
     ;
 
-//chamada de funcao
-
-identificador
+/*identificador
    : T_IDENTIF
-   ;
+   ;*/
+
 //pega o id da funcao e marca o desvio sempre
 chamada_func
      : T_IDENTIF {aux = buscaSimbolo(atomo);
-                  empilha(LIXO);}
+                  empilha(LIXO);
+                  fprintf(yyout,"\tAMEM\t1\n");}
      T_ABRE 
 
      lista_argumentos T_FECHA
@@ -449,8 +449,8 @@ argumento: expressao
 
 
 termo
-     : identificador chamada_func
-   /* : T_IDENTIF   
+     //: identificador chamada_func
+    : T_IDENTIF   
         {
             //printf("\nSTRINGG:%s\n",atomo);
             int pos = buscaSimbolo(atomo);
@@ -460,7 +460,7 @@ termo
             else
                fprintf(yyout,"\tCRVL\t%d\n", tabSimb[pos].end);
             empilha(tabSimb[pos].tip);
-        }*/
+        }
     | T_NUMERO
         {
         fprintf(yyout,"\tCRCT\t%s\n", atomo);
