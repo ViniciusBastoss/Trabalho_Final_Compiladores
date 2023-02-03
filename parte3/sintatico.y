@@ -279,7 +279,12 @@ escrita
        }
 
        //problema aqui 
-       //| T_ESCREVA chamada_func
+      | T_ESCREVA chamada_func        
+      {
+        //desempilha();
+        fprintf(yyout, "\tESCR\n");
+       }
+       
     ;
 
 leitura
@@ -420,7 +425,7 @@ expressao
 
 //pega o id da funcao e marca o desvio sempre
 chamada_func
-     : T_IDENTIF {aux = buscaSimbolo(atomo);
+     : identificador {aux = buscaSimbolo(atomo);
                   empilha(LIXO);
                   fprintf(yyout,"\tAMEM\t1\n");}
      T_ABRE 
