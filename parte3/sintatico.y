@@ -278,8 +278,8 @@ escrita
         fprintf(yyout, "\tESCR\n");
        }
 
-       //problema aqui erro de redução junto de expressao T_VEZES chamada_func
-      // | T_ESCREVA chamada_func
+       //problema aqui 
+       //| T_ESCREVA chamada_func
     ;
 
 leitura
@@ -418,10 +418,6 @@ expressao
     
     ;
 
-/*identificador
-   : T_IDENTIF
-   ;*/
-
 //pega o id da funcao e marca o desvio sempre
 chamada_func
      : T_IDENTIF {aux = buscaSimbolo(atomo);
@@ -435,21 +431,13 @@ chamada_func
         fprintf(yyout,"\tSVCP\n");
         fprintf(yyout,"\tDSVS\t%s\n",tabSimb[aux].rot);
      }
-     //| T_IDENTIF T_ABRE chamada_func T_FECHA
-      |chamada_func T_VEZES expressao
-     //|expressao T_VEZES chamada_func
 ;
 
 lista_argumentos
-     : lista_argumentos argumento
+     : lista_argumentos expressao
      |
-
-argumento: expressao 
-
-
-
-termo
-     //: identificador chamada_func
+     ;
+/*
     : T_IDENTIF   
         {
             //printf("\nSTRINGG:%s\n",atomo);
@@ -460,7 +448,29 @@ termo
             else
                fprintf(yyout,"\tCRVL\t%d\n", tabSimb[pos].end);
             empilha(tabSimb[pos].tip);
+        }*/
+//: identificador chamada_func
+
+identificador
+   : T_IDENTIF{
+    int pos = buscaSimbolo(atomo);
+    empilha(pos);
+   }
+   ;
+chamada:
+       |T_ABRE lista_parametros T_FECHA
+       ;
+termo
+    : identificador chamada{
+        int pos = desempilha();
+        if(tabSimb[pos].cat != FUN){
+            if(tabSimb[pos].esc == GLOBAL)
+              fprintf(yyout,"\tCRVG\t%d\n", tabSimb[pos].end); 
+            else
+               fprintf(yyout,"\tCRVL\t%d\n", tabSimb[pos].end);
+            empilha(tabSimb[pos].tip);            
         }
+    }
     | T_NUMERO
         {
         fprintf(yyout,"\tCRCT\t%s\n", atomo);
