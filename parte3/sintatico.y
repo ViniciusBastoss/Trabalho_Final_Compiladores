@@ -230,7 +230,7 @@ comando
     | repeticao
     | selecao
     | atribuicao
-    | chamada_func
+    | chamada
     | retorne
 
 retorne 
@@ -249,7 +249,7 @@ retorne
         if(marcaPar - 1)    
            fprintf(yyout,"\tRTSP\t%d\n", marcaPar - 1);
     }
-    | T_RETORNE chamada_func
+    | T_RETORNE chamada
     {
        if(escopo == LOCAL){
            fprintf(yyout,"\tARZL\t%d\n", indFunc);
@@ -279,7 +279,7 @@ escrita
        }
 
        //problema aqui 
-      | T_ESCREVA chamada_func        
+      | T_ESCREVA chamada        
       {
         //desempilha();
         fprintf(yyout, "\tESCR\n");
@@ -424,19 +424,7 @@ expressao
     ;
 
 //pega o id da funcao e marca o desvio sempre
-chamada_func
-     : identificador {aux = buscaSimbolo(atomo);
-                  empilha(LIXO);
-                  fprintf(yyout,"\tAMEM\t1\n");}
-     T_ABRE 
 
-     lista_argumentos T_FECHA
-     {
-        confereParametros(aux);
-        fprintf(yyout,"\tSVCP\n");
-        fprintf(yyout,"\tDSVS\t%s\n",tabSimb[aux].rot);
-     }
-;
 
 lista_argumentos
      : lista_argumentos expressao
@@ -462,9 +450,18 @@ identificador
     empilha(pos);
    }
    ;
-chamada:
-       |T_ABRE lista_parametros T_FECHA
-       ;
+
+chamada
+    : T_ABRE 
+
+     lista_argumentos T_FECHA
+     {
+        confereParametros(aux);
+        fprintf(yyout,"\tSVCP\n");
+        fprintf(yyout,"\tDSVS\t%s\n",tabSimb[aux].rot);
+     }
+;
+
 termo
     : identificador chamada{
         int pos = desempilha();
@@ -474,6 +471,11 @@ termo
             else
                fprintf(yyout,"\tCRVL\t%d\n", tabSimb[pos].end);
             empilha(tabSimb[pos].tip);            
+        }
+        else{
+            aux = buscaSimbolo(atomo);
+                  empilha(LIXO);
+                  fprintf(yyout,"\tAMEM\t1\n");
         }
     }
     | T_NUMERO
