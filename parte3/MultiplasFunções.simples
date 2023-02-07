@@ -1,0 +1,31 @@
+programa teste4
+inteiro x y 
+
+func inteiro maior (inteiro a inteiro b)
+inicio 
+   se a > b 
+      entao retorne a 
+      senao retorne b 
+    fimse 
+fimfunc
+
+func inteiro quadrado (inteiro a)
+inicio 
+   retorne a * a 
+fimfunc 
+
+func inteiro fatorial (inteiro a)
+inicio 
+   se a > 0
+       entao retorne  a * fatorial (a - 1)
+       senao retorne quadrado(10)
+    fimse 
+fimfunc 
+
+
+
+inicio 
+   leia x 
+   escreva fatorial (x)
+   escreva maior(maior(2 9+36) maior(10 7))
+fimprograma 

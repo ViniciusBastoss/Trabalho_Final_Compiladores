@@ -161,6 +161,7 @@ void indicesLocais(int contPar, int funcId){
         tabSimb[funcId].par[j] = tabSimb[i].tip;
     }
     tabSimb[funcId].par[j] = LIXO;
+    
 
 }
 //ao processar os parametros da funcao o tipo de cada parametro é empilhado, assim desempilhamos e testamos com os tipos aceitos pela funcao

@@ -146,7 +146,7 @@ funcao
             escopo = GLOBAL;
             removeLocais();
             mostraTabela();
-            contaVar += contParam - 1;
+            contaVar = contaVar + 1;
             contaVarLocal = 0;
             contParam = 0;
         }
