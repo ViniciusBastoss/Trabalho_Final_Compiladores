@@ -49,6 +49,7 @@ char charNome[10], charAux[20];
 
 
 %start programa
+%expect 1
 
 %left T_E T_OU
 %left T_IGUAL
@@ -416,7 +417,8 @@ expressao
 //: identificador chamada_func
 
 identificador
-   : T_IDENTIF{
+   : T_IDENTIF
+   {
     int pos = buscaSimbolo(atomo);
     empilha(pos);
    }
@@ -427,6 +429,8 @@ chamada:
 
      lista_argumentos T_FECHA
      {
+        aux = desempilha();
+        empilha(LIXO);
         confereParametros(aux);
         fprintf(yyout,"\tSVCP\n");
         fprintf(yyout,"\tDSVS\t%s\n",tabSimb[aux].rot);
@@ -453,9 +457,11 @@ termo
             empilha(tabSimb[pos].tip);            
         }
         else{
-            aux = buscaSimbolo(atomo);
-                  empilha(LIXO);
+            if(tabSimb[pos].cat == FUN){
+                  empilha(pos);
                   fprintf(yyout,"\tAMEM\t1\n");
+            }
+
         }
     }
     | T_NUMERO
