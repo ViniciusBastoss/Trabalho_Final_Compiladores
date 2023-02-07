@@ -249,7 +249,7 @@ retorne
         if(marcaPar - 1)    
            fprintf(yyout,"\tRTSP\t%d\n", marcaPar - 1);
     }
-    | T_RETORNE chamada
+  /*  | T_RETORNE chamada
     {
        if(escopo == LOCAL){
            fprintf(yyout,"\tARZL\t%d\n", indFunc);
@@ -262,7 +262,7 @@ retorne
            fprintf(yyout,"\tDMEM\t%d\n", contaVarLocal);
         if(marcaPar - 1)    
            fprintf(yyout,"\tRTSP\t%d\n", marcaPar - 1);
-    }
+    }*/
 
     ;
 
@@ -426,10 +426,6 @@ expressao
 //pega o id da funcao e marca o desvio sempre
 
 
-lista_argumentos
-     : lista_argumentos expressao
-     |
-     ;
 /*
     : T_IDENTIF   
         {
@@ -461,6 +457,15 @@ chamada
         fprintf(yyout,"\tDSVS\t%s\n",tabSimb[aux].rot);
      }
 ;
+
+lista_argumentos
+     : argumento lista_argumentos
+     |
+     ;
+
+argumento
+     :expressao
+     ;
 
 termo
     : identificador chamada{
