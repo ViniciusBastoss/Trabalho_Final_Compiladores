@@ -13,5 +13,5 @@ inicio
    leia x
    leia y 
    escreva x
-   escreva maior ( x y )
+   escreva maior (5 2)
 fimprograma 

@@ -230,7 +230,6 @@ comando
     | repeticao
     | selecao
     | atribuicao
-    | chamada
     | retorne
 
 retorne 
@@ -249,21 +248,6 @@ retorne
         if(marcaPar - 1)    
            fprintf(yyout,"\tRTSP\t%d\n", marcaPar - 1);
     }
-  /*  | T_RETORNE chamada
-    {
-       if(escopo == LOCAL){
-           fprintf(yyout,"\tARZL\t%d\n", indFunc);
-       }
-          
-       else
-           yyerror("Erro lexico!");
-
-        if (contaVarLocal)
-           fprintf(yyout,"\tDMEM\t%d\n", contaVarLocal);
-        if(marcaPar - 1)    
-           fprintf(yyout,"\tRTSP\t%d\n", marcaPar - 1);
-    }*/
-
     ;
 
 entrada_saida
@@ -277,14 +261,7 @@ escrita
         desempilha();
         fprintf(yyout, "\tESCR\n");
        }
-
-       //problema aqui 
-      | T_ESCREVA chamada        
-      {
-        //desempilha();
-        fprintf(yyout, "\tESCR\n");
-       }
-       
+ 
     ;
 
 leitura
@@ -414,7 +391,7 @@ expressao
             fprintf(yyout,"\tDISJ\n"); 
         }
     | termo
-    //problema gerado: erro rotulos CRVG
+
    /* | chamada_func{
         int tip = buscaSimbolo(charNome);
         tip = tabSimb[tip].tip;
@@ -422,8 +399,6 @@ expressao
         }  */  
     
     ;
-
-//pega o id da funcao e marca o desvio sempre
 
 
 /*
@@ -447,8 +422,8 @@ identificador
    }
    ;
 
-chamada
-    : T_ABRE 
+chamada:
+    | T_ABRE 
 
      lista_argumentos T_FECHA
      {

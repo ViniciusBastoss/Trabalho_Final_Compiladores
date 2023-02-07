@@ -5,13 +5,8 @@ programa testatipos
   inicio
     x <- F
     a <- 10
-    se a > 1 entao
-        escreva 5
-      senao escreva b 
+    se a > c
+       entao a <- 10
+       senao a <- 5
     fimse
-    enquanto x faca
-      escreva a
-      a <- a > 1
-      x <- a > 1
-    fimenquanto
 fimprograma
