@@ -5,7 +5,7 @@
 #include "lexico.c"
 #include "utils.c"
 int contaVar, contaVarLocal = 0;  //conta numero de variaveis
-int marcaPar = 0;
+int contParam = 0;
 int rotulo = 0; //marca lugares no codigo
 int tipo, escopo = GLOBAL;
 char charNome[10], charAux[20];
@@ -122,7 +122,7 @@ funcao
      {
            strcpy(elemTab.id, atomo);
            strcpy(charNome, atomo);
-           marcaPar++;
+           contParam++;
            elemTab.tip = tipo;
            elemTab.esc = escopo;
            elemTab.cat = FUN;
@@ -133,8 +133,8 @@ funcao
       T_ABRE lista_parametros T_FECHA
       variaveis 
         {
-            //printf("\n%d %d\n", marcaPar, contaVar);
-           indicesLocais(marcaPar, contaVar);
+            //printf("\n%d %d\n", contParam, contaVar);
+           indicesLocais(contParam, contaVar);
            mostraTabela(); 
            //empilha(contaVarLocal);
            if(contaVarLocal){
@@ -146,6 +146,9 @@ funcao
             escopo = GLOBAL;
             removeLocais();
             mostraTabela();
+            contaVar += contParam - 1;
+            contaVarLocal = 0;
+            contParam = 0;
         }
 
 lista_parametros
@@ -157,7 +160,7 @@ parametro
        : tipo T_IDENTIF
          { 
            strcpy(elemTab.id, atomo);
-           marcaPar++;
+           contParam++;
            elemTab.tip = tipo;
            elemTab.esc = escopo;
            elemTab.cat = PAR;
@@ -194,7 +197,6 @@ lista_variaveis
            elemTab.esc = escopo;
            elemTab.cat = VAR;
            if(escopo == LOCAL){
-               elemTab.end = contaVarLocal;
                contaVarLocal++;
            }
            else{
@@ -246,8 +248,8 @@ retorne
 
         if (contaVarLocal)
            fprintf(yyout,"\tDMEM\t%d\n", contaVarLocal);
-        if(marcaPar - 1)    
-           fprintf(yyout,"\tRTSP\t%d\n", marcaPar - 1);
+        if(contParam - 1)    
+           fprintf(yyout,"\tRTSP\t%d\n", contParam - 1);
     }
     ;
 
@@ -324,7 +326,6 @@ selecao
         }
     ;
 
-//modificado: confere o escopo da variavel
 atribuicao
     : T_IDENTIF 
         {
@@ -398,29 +399,14 @@ expressao
         tip = tabSimb[tip].tip;
         empilha(tip);
         }  */  
-    
     ;
 
 
-/*
-    : T_IDENTIF   
-        {
-            //printf("\nSTRINGG:%s\n",atomo);
-            int pos = buscaSimbolo(atomo);
-            printf("\nPosicao:%d, %s",tabSimb[pos].end,tabSimb[pos].id);
-            if(tabSimb[pos].esc == GLOBAL)
-              fprintf(yyout,"\tCRVG\t%d\n", tabSimb[pos].end); 
-            else
-               fprintf(yyout,"\tCRVL\t%d\n", tabSimb[pos].end);
-            empilha(tabSimb[pos].tip);
-        }*/
-//: identificador chamada_func
 
 identificador
    : T_IDENTIF
    {
     int pos = buscaSimbolo(atomo);
-    printf("\n\nAtomo:%s, pos:%d",atomo,pos);
     empilha(pos);
    }
    ;
@@ -451,7 +437,6 @@ argumento
 termo
     : identificador chamada{
         int pos = desempilha();
-        printf("\nDs:%d\n",pos);
         if(tabSimb[pos].cat != FUN){
             if(tabSimb[pos].esc == GLOBAL)
               fprintf(yyout,"\tCRVG\t%d\n", tabSimb[pos].end); 

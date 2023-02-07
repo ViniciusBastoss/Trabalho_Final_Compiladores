@@ -1,15 +1,27 @@
-programa recursao
-inteiro x 
-func inteiro recursivo (inteiro n)
+programa teste4
+inteiro x y
+
+func inteiro fatorial (inteiro a)
 inicio 
-   se n > 0
-       entao escreva n  
-              recursivo (n - 1)
-       senao 
+   se a > 0
+       entao retorne  a * fatorial (a - 1)
+       senao retorne 1
     fimse 
-    retorne 0
 fimfunc 
+
+func inteiro maior (inteiro a inteiro b)
+inicio 
+    se x > 0
+    entao retorne fatorial (x + 1)
+    senao retorne 0
+    fimse
+
+fimfunc 
+
 inicio 
    leia x 
-   recursivo (x)
+   escreva fatorial (x)
+   leia x 
+   leia y
+   escreva maior (x y)
 fimprograma 

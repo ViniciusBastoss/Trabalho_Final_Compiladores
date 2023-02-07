@@ -143,26 +143,24 @@ void testaTipo(int tipo1, int tipo2, int ret)
 {
     int t1 = desempilha();
     int t2 = desempilha();
-    printf("\nPOSAtrib:%d\n",t1);
     if (t1 != tipo1 || t2 != tipo2)
         yyerror("Incompatibilidade de tipo!");
     empilha(ret);
 }
-//guarda o id correto para as variaveis locais e para a funcao, recebendo o total de variaveis locais + funcao e contaVar
-void indicesLocais(int marcaPar, int contaVar){
-    //guarda o id da funca e depois no for o id das variaveis ao mesm otempo que colcoa o tipo da variavel no .par da funcao
+//guarda o id correto para os parametros locais e para a funcao, recebendo o total de parametros + funcao e contaVar
+void indicesLocais(int contPar, int funcId){
+    //guarda o id da funcao e depois no for o id das variaveis ao mesmo tempo que coloca o tipo da variavel no .par da funcao
     int j = 0;
-     marcaPar += 2;
-     marcaPar = -1 * marcaPar;
-     tabSimb[contaVar].end = marcaPar;
-     indFunc = marcaPar;
-     printf("\nAux:%d\n", aux);
-     marcaPar++;
-    for(int i = contaVar + 1; marcaPar <= -3; marcaPar++, i++, j++){
-        tabSimb[i].end = marcaPar; 
-        tabSimb[contaVar].par[j] = tabSimb[i].tip;
+     contPar += 2;
+     contPar = -1 * contPar;
+     tabSimb[funcId].end = contPar;
+     indFunc = contPar;
+     contPar++;
+    for(int i = funcId + 1; contPar <= -3; contPar++, i++, j++){
+        tabSimb[i].end = contPar; 
+        tabSimb[funcId].par[j] = tabSimb[i].tip;
     }
-    tabSimb[contaVar].par[j] = LIXO;
+    tabSimb[funcId].par[j] = LIXO;
 
 }
 //ao processar os parametros da funcao o tipo de cada parametro é empilhado, assim desempilhamos e testamos com os tipos aceitos pela funcao
@@ -183,6 +181,9 @@ void confereParametros(int posFunc){
 void removeLocais(){
     for(int i = 0; i < TAM_TAB; i++){
         if(tabSimb[i].esc == LOCAL)
-        tabSimb[i] = elemTabaux;
+        {
+            tabSimb[i] = elemTabaux;
+            posTab--;
+        }
     }
 }

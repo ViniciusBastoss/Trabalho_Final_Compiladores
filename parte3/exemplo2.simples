@@ -12,6 +12,5 @@ fimfunc
 inicio 
    leia x
    leia y 
-   escreva x
-   escreva maior (5 2)
+   escreva maior (x y)
 fimprograma 
