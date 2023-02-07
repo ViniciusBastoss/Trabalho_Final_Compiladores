@@ -6,5 +6,5 @@ inicio
 fimfunc 
 inicio 
    leia x 
-   escreva quadrado ( x)
+   escreva quadrado (quadrado (x))
 fimprograma 

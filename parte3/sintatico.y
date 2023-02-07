@@ -420,20 +420,22 @@ identificador
    : T_IDENTIF
    {
     int pos = buscaSimbolo(atomo);
+    printf("\n\nAtomo:%s, pos:%d",atomo,pos);
     empilha(pos);
    }
    ;
 
 chamada:
-    | T_ABRE 
-
-     lista_argumentos T_FECHA
-     {
+    | T_ABRE {
         aux = desempilha();
         empilha(LIXO);
+        fprintf(yyout,"\tAMEM\t1\n");
+    }
+        
+     lista_argumentos T_FECHA
+     {
         confereParametros(aux);
-        fprintf(yyout,"\tSVCP\n");
-        fprintf(yyout,"\tDSVS\t%s\n",tabSimb[aux].rot);
+        empilha(aux);
      }
 ;
 
@@ -449,6 +451,7 @@ argumento
 termo
     : identificador chamada{
         int pos = desempilha();
+        printf("\nDs:%d\n",pos);
         if(tabSimb[pos].cat != FUN){
             if(tabSimb[pos].esc == GLOBAL)
               fprintf(yyout,"\tCRVG\t%d\n", tabSimb[pos].end); 
@@ -458,8 +461,9 @@ termo
         }
         else{
             if(tabSimb[pos].cat == FUN){
-                  empilha(pos);
-                  fprintf(yyout,"\tAMEM\t1\n");
+                  fprintf(yyout,"\tSVCP\n");
+                  fprintf(yyout,"\tDSVS\t%s\n",tabSimb[aux].rot);
+                  empilha(tabSimb[pos].tip);
             }
 
         }
