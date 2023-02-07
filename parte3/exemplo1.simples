@@ -1,11 +1,10 @@
 programa teste1
-func inteiro maior (inteiro a inteiro b)
+logico m
+func inteiro maior (inteiro a inteiro b logico c)
 inicio 
-   se a > b 
-      entao retorne a 
-      senao retorne b 
-    fimse 
+     retorne 1
 fimfunc 
+
 inicio 
-   escreva maior ( 10 20 )
+   escreva maior ( 10 20 V)
 fimprograma 

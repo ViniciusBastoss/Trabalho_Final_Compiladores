@@ -5,7 +5,7 @@
 #include "lexico.c"
 #include "utils.c"
 int contaVar, contaVarLocal = 0;  //conta numero de variaveis
-int contParam = 0;
+int contParam = 0, temRetorno = 0;
 int rotulo = 0; //marca lugares no codigo
 int tipo, escopo = GLOBAL;
 char charNome[10], charAux[20];
@@ -149,6 +149,9 @@ funcao
             contaVar = contaVar + 1;
             contaVarLocal = 0;
             contParam = 0;
+            if(!temRetorno)
+               yyerror("Sem retorno para a função!");
+            temRetorno = 0;
         }
 
 lista_parametros
@@ -240,6 +243,7 @@ retorne
     {
        if(escopo == LOCAL){
            fprintf(yyout,"\tARZL\t%d\n", indFunc);
+           temRetorno = 1;
        }
           
        else
